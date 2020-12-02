@@ -3,7 +3,7 @@ mongoose.connect('mongodb://localhost:27017/fruitsDB', {useNewUrlParser: true, u
 
 // const { Schema } = mongoose; // without this, Schema is not defined
 
-const fruitSchema = mongoose.Schema({ // create a schema
+const fruitSchema = new mongoose.Schema({ // create a schema
 	name: String,
 	rating: Number,
 	review: String
@@ -19,7 +19,7 @@ const fruit = new Fruit({
 
 // fruit.save(); //save to the database fruitsdB under fruits collection
 
-const personSchema = mongoose.Schema({
+const personSchema = new mongoose.Schema({
 	name: String,
 	age: Number
 });
@@ -53,11 +53,24 @@ const mango = new Fruit({
 });
 
 //add multiple documents to the fruits colllection
-Fruit.insertMany([kiwi, banana, mango], function(err){ // We use "Fruit" model and the insertMany method
+// Fruit.insertMany([kiwi, banana, mango], function(err){ // We use "Fruit" model and the insertMany method
+// 	if(err){
+// 		console.log(err);
+// 	}else{
+// 		console.log("Successfully added to fruitsDB!");
+// 	}
+// });
+
+Fruit.find(function(err, fruits){  // it reads document from mongodb database to the app.js
 	if(err){
 		console.log(err);
 	}else{
-		console.log("Successfully added to fruitsDB!");
+		mongoose.connection.close(); // close the mongoDB database connection // no need to do control c on terminal
+
+		fruits.forEach(function(fruit){
+			console.log(fruit.name);
+		});
+		
 	}
 });
 
