@@ -52,15 +52,6 @@ const mango = new Fruit({
 	review: "Very Yummy fruit!"
 });
 
-// add multiple documents to the fruits colllection
-Fruit.insertMany([kiwi, banana, mango], function(err){ // We use "Fruit" model and the insertMany method
-	if(err){
-		console.log(err);
-	}else{
-		console.log("Successfully added to fruitsDB!");
-	}
-});
-
 Fruit.find(function(err, fruits){  // it reads document from mongodb database to the app.js
 	if(err){
 		console.log(err);
@@ -71,6 +62,30 @@ Fruit.find(function(err, fruits){  // it reads document from mongodb database to
 			console.log(fruit.name);
 		});
 		
+	}
+});
+
+Fruit.updateOne({_id: "5fc9b0aaffc3143a08c4099b"}, {name: "Peach"}, function(err){
+	if(err){
+		console.log(err);
+	}else{
+		console.log("Successfully Updated the Document!");
+	}
+});
+
+Fruit.deleteOne({_id: "5fc9b0aaffc3143a08c4099b"}, function(err){
+	if(err){
+		console.log(err);
+	}else{
+		console.log("Successfully deteted the document!");
+	}
+});
+
+Fruit.deleteMany({name: "Apple"}, function(err){
+	if(err){
+		console.log(err);
+	}else{
+		console.log("Successfully deleted many!");
 	}
 });
 
