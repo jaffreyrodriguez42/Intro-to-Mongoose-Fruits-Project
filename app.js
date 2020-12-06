@@ -21,36 +21,11 @@ const fruit = new Fruit({
 
 const personSchema = new mongoose.Schema({
 	name: String,
-	age: Number
+	age: Number,
+	favouriteFruit: fruitSchema // embedding document
 });
 
 const Person = mongoose.model('Person', personSchema);
-
-const person = new Person({
-	name: "Jaff Rey",
-	age: 33
-});
-
-// person.save();
-
-const kiwi = new Fruit({
-	name: "Kiwi",
-	rating: 7,
-	review: "The best fruit ever!"
-});
-
-const banana = new Fruit({
-	name: "Banana",
-	rating: 5,
-	review: "Not so much!"
-});
-
-
-const mango = new Fruit({
-	name: "Mango",
-	rating: 9,
-	review: "Very Yummy fruit!"
-});
 
 Fruit.find(function(err, fruits){  // it reads document from mongodb database to the app.js
 	if(err){
@@ -65,27 +40,39 @@ Fruit.find(function(err, fruits){  // it reads document from mongodb database to
 	}
 });
 
-Fruit.updateOne({_id: "5fc9b0aaffc3143a08c4099b"}, {name: "Peach"}, function(err){
+const pineapple = new Fruit({
+	name: "Pineapple",
+	rating: 7,
+	review: "It's a great fruit!"
+});
+
+// pineapple.save();
+
+const person = new Person({
+	name: "Jenny",
+	age: "12",
+	favouriteFruit: pineapple
+});
+
+// person.save();
+
+const melon = new Fruit({
+	name: "Melon",
+	rating: 5,
+	review: "Nice fruit!"
+});
+
+melon.save();
+
+Person.updateOne({name: "Jaff Rey"}, {favouriteFruit: melon}, function(err){
 	if(err){
 		console.log(err);
 	}else{
-		console.log("Successfully Updated the Document!");
+		console.log("Successfully added favourite fruit!");
 	}
 });
 
-Fruit.deleteOne({_id: "5fc9b0aaffc3143a08c4099b"}, function(err){
-	if(err){
-		console.log(err);
-	}else{
-		console.log("Successfully deteted the document!");
-	}
-});
 
-Fruit.deleteMany({name: "Apple"}, function(err){
-	if(err){
-		console.log(err);
-	}else{
-		console.log("Successfully deleted many!");
-	}
-});
+
+
 
